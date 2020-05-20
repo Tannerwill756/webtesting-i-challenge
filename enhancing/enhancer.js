@@ -6,8 +6,12 @@ module.exports = {
 };
 
 function succeed(item) {
-  if (typeof item.enhancement === "string") {
-    throw "enhancement must be an integer between 0 and 20";
+  if (
+    typeof item.enhancement === "string" ||
+    item.enhancement === undefined ||
+    item.enhancement === null
+  ) {
+    return { ...item, enhancement: 0 };
   } else if (item.enhancement < 0) {
     return { ...item, enhancement: 0 };
   } else if (item.enhancement < 20) {
@@ -22,7 +26,7 @@ function succeed(item) {
 function fail(item) {
   if (item.enhancement < 15) {
     return { ...item, durability: item.durability - 5 };
-  } else if (item.enhancement > 15) {
+  } else if (item.enhancement >= 15) {
     if (item.enhancement > 16) {
       return {
         ...item,
@@ -36,7 +40,11 @@ function fail(item) {
 }
 
 function repair(item) {
-  return { ...item, durability: 100 };
+  if (item.durability < 100 && item.durability >= 0) {
+    return { ...item, durability: 100 };
+  } else {
+    throw "Durability can only be an integer between 0 and 100";
+  }
 }
 
 function get(item) {
