@@ -22,4 +22,9 @@ describe("method testing", () => {
       expect(fail(item).enhancement).toBe(17);
     });
   });
+  describe("get()", () => {
+    it("if enhancement is greater than 0 add the enhancement number before their name", () => {
+      expect(get(item).name).toBe("[+18] Tanner");
+    });
+  });
 });
